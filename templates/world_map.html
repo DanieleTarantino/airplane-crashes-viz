@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-geo@3"></script>
+</head>
+
+<body>
+    <div id="map" style="background-color: red;">
+    <h1 > hello world</h1>
+    </div>
+    <script>
+        /*
+        var width = 800;
+        var height = 500;
+
+        var projection = d3.geo.albersUsa()
+            .translate([width / 2, height / 2]);
+
+        var path = d3.geo.path()
+            .projection(projection);
+
+        var svg = d3.select("#map").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("background-color", "cyan");
+
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        
+        d3.json("us-states.json", function (json) {
+            svg.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .attr("class", "states")
+        });
+        d3.csv("walmart-stores.csv", function (csv) {
+            initialData = csv;
+            drawLocations();
+            drawOpenings();
+        });
+
+        function drawLocations() {
+            svg.selectAll("circle")
+                .data(initialData)
+                .enter()
+                .append("circle")
+                .attr("cx", function (d) {
+                    return projection([d.longitude, d.latitude])[0];
+                })
+                .attr("cy", function (d) {
+                    return projection([d.longitude, d.latitude])[1];
+                })
+                .attr("r", 3)
+                .attr("class", "locations");
+        };
+
+        function drawOpenings() {
+            d3.selectAll(".openings")
+                .remove();
+
+            var selectedYear = document.getElementById("menu").value;
+            var filteredData = initialData.filter(function (d) { return d.openyear == selectedYear; });
+
+            var openings = svg.selectAll(".openings")
+                .data(filteredData)
+                .enter()
+                .append("circle")
+                .attr("cx", function (d) {
+                    return projection([d.longitude, d.latitude])[0];
+                })
+                .attr("cy", function (d) {
+                    return projection([d.longitude, d.latitude])[1];
+                })
+                .attr("r", 3)
+                .attr("class", "openings");
+
+            openings
+                .on("mouseover", function (d) {
+                    tooltip.transition()
+                        .duration(250)
+                        .style("opacity", 1);
+                    tooltip.html(
+                        "<p><strong>" + d.city + ", " + d.state + "</strong></p>"
+                    )
+                        .style("left", (d3.event.pageX + 15) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function (d) {
+                    tooltip.transition()
+                        .duration(250)
+                        .style("opacity", 0);
+                });
+
+            d3.select(".year").text("Year: " + selectedYear);
+
+            var countByYear = d3.nest()
+                .key(function (d) { return d.openyear; })
+                .rollup(function (values) { return values.length; })
+                .entries(filteredData);
+
+            d3.select(".count")
+                .text(function (d, i) {
+                    return "New Stores: " + countByYear[i].values
+                });
+
+        };
+
+        d3.select("#menu")
+            .on("input", function () {
+                drawOpenings();
+            });
+
+        d3.select(self.frameElement).style("height", "675px");
+*/
+
+    </script>
+
+</body>
+
+</html>

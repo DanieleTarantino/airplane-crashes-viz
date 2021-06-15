@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+</head>
+
+<body>
+
+    <div id="cloud" style="margin:auto; height: 500px; overflow: hidden; position: relative; width: 100%"></div>
+    <script>
+
+        function wordCloud(selector) {
+
+            var fill = d3.scale.category20();
+
+
+            var svg = d3.select(selector).append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .attr("margin", "auto")
+                .attr("position", "absolute")
+                .append("g")
+                .attr("transform", "translate(" + innerWidth / 2 + "," + innerHeight / 1.75 + ")");
+            // .attr("margin", "auto");
+            d3.select("body").attr("height", "100%");
+
+
+            //Draw the word cloud
+            function draw(words) {
+                console.log(words);
+                var cloud = svg.selectAll("g text")
+                    .data(words, function (d) { return d.text; })
+
+                //Entering words
+                cloud.enter()
+                    .append("text")
+                    .style("font-family", "Impact")
+                    .style("fill", function (d, i) { return fill(i); })
+                    .attr("text-anchor", "middle")
+                    .attr('font-size', 1)
+                    .text(function (d) { return d.text; });
+
+                //Entering and existing words
+                cloud
+                    .transition()
+                    .duration(600)
+                    .style("font-size", function (d) { return d.size + "px"; })
+                    .attr("transform", function (d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .style("fill-opacity", 1);
+
+                //Exiting words
+                cloud.exit()
+                    .transition()
+                    .duration(200)
+                    .style('fill-opacity', 1e-6)
+                    .attr('font-size', 1)
+                    .remove();
+            }
+
+
+            return {
+
+                update: function (words) {
+                    console.log("w3", words);
+                    d3.layout.cloud().size([500, 500])
+                        .words(words)
+                        .padding(1)
+                        .rotate(0)
+                        .font("Monospace")
+                        .fontSize(function (d) { return d.size; })
+                        .on("end", draw)
+                        .start();
+                }
+            }
+
+        }
+
+        var words;
+        var w = $.ajax({
+            url: "wc_data", async: false, success: function (x) {
+                words = x["data"];
+                console.log("w1", words);
+            }
+        });
+
+
+        console.log("w2", words);
+        function getWords() {
+            return words
+                .map(function (d) {
+                    return { text: d[0], size: d[1] };
+                })
+        }
+        function showNewWords(vis, i) {
+            i = i || 0;
+
+            vis.update(getWords())
+            //setTimeout(function () { showNewWords(vis, i + 1) }, 2000)
+        }
+
+        //Create a new instance of the word cloud visualisation.
+        var myWordCloud = wordCloud('#cloud');
+
+        //Start cycling through the demo data
+        showNewWords(myWordCloud);
+
+
+    </script>
+
+</body>
+
+</html>
