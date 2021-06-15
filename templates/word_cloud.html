@@ -13,7 +13,7 @@
 
 <body>
 
-    <div id="cloud" style="margin:auto; height: 500px; overflow: hidden; position: relative; width: 100%"></div>
+    <div id="cloud"></div>
     <script>
 
         function wordCloud(selector) {
@@ -22,14 +22,14 @@
 
 
             var svg = d3.select(selector).append("svg")
-                .attr("width", "100%")
-                .attr("height", "100%")
+                .attr("width", "500px")
+                .attr("height", "500px")
                 .attr("margin", "auto")
                 .attr("position", "absolute")
                 .append("g")
-                .attr("transform", "translate(" + innerWidth / 2 + "," + innerHeight / 1.75 + ")");
+                .attr("transform", "translate(250,250)");
             // .attr("margin", "auto");
-            d3.select("body").attr("height", "100%");
+            // d3.select("body").attr("height", "100%");
 
 
             //Draw the word cloud
