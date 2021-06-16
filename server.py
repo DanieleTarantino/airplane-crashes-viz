@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask.templating import render_template
 from pca_test import wordcloud_from_cvs
 import random
+import wordtreegen
 
 app = Flask(__name__, template_folder="templates")
 
@@ -11,16 +12,24 @@ def world_map():
     return render_template("world_map.html")
 
 
+@app.route("/wt_data")
+def wt_data():
+    return wordtreegen.generate_json("dataset.csv", "crashed")
+
+
 @app.route("/wc_data")
 def wc_data():
-
     words = wordcloud_from_cvs("dataset.csv", 25, (25, 75))
     return jsonify({"data": words})
 
 
+@ app.route("/world_tree")
+def word_tree():
+    return render_template("world_tree.html")
+
+
 @ app.route("/word_cloud")
 def word_cloud():
-    # return Flask.send_static_file("/templates/world_map.html")
     return render_template("word_cloud.html")
 
 

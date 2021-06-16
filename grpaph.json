@@ -1,0 +1,1020 @@
+{
+  "name": "crashed",
+  "directed": true,
+  "strict": false,
+  "rankdir": "LR",
+  "_subgraph_cnt": 0,
+  "objects": [
+    {
+      "_gvid": 0,
+      "name": "crashed",
+      "fontsize": "30",
+      "label": "crashed",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 1,
+      "name": "and-bwd-and",
+      "fontsize": "24",
+      "label": "and",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 2,
+      "name": "stalled-bwd-and-stalled",
+      "fontsize": "18",
+      "label": "stalled",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 3,
+      "name": "aircraft-bwd-and-stalled-aircraft",
+      "fontsize": "15",
+      "label": "aircraft",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 4,
+      "name": "the-bwd-and-stalled-aircraft-the",
+      "fontsize": "15",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 5,
+      "name": "runway-bwd-and-runway",
+      "fontsize": "17",
+      "label": "runway",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 6,
+      "name": "the-bwd-and-runway-the",
+      "fontsize": "17",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 7,
+      "name": "overran-bwd-and-runway-the-overran",
+      "fontsize": "16",
+      "label": "overran",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 8,
+      "name": "altitude-bwd-and-altitude",
+      "fontsize": "17",
+      "label": "altitude",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 9,
+      "name": "lost-bwd-and-altitude-lost",
+      "fontsize": "15",
+      "label": "lost",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 10,
+      "name": "control-bwd-and-control",
+      "fontsize": "16",
+      "label": "control",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 11,
+      "name": "lost-bwd-and-control-lost",
+      "fontsize": "16",
+      "label": "lost",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 12,
+      "name": "aircraft-bwd-and-control-lost-aircraft",
+      "fontsize": "15",
+      "label": "aircraft",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 13,
+      "name": "lines-bwd-and-lines",
+      "fontsize": "15",
+      "label": "lines",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 14,
+      "name": "power-bwd-and-lines-power",
+      "fontsize": "15",
+      "label": "power",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 15,
+      "name": "struck-bwd-and-lines-power-struck",
+      "fontsize": "15",
+      "label": "struck",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 16,
+      "name": "fuel-bwd-and-fuel",
+      "fontsize": "15",
+      "label": "fuel",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 17,
+      "name": "of-bwd-and-fuel-of",
+      "fontsize": "15",
+      "label": "of",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 18,
+      "name": "out-bwd-and-fuel-of-out",
+      "fontsize": "15",
+      "label": "out",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 19,
+      "name": "left-bwd-and-left",
+      "fontsize": "15",
+      "label": "left",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 20,
+      "name": "the-bwd-and-left-the",
+      "fontsize": "15",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 21,
+      "name": "to-bwd-and-left-the-to",
+      "fontsize": "15",
+      "label": "to",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 22,
+      "name": "right-bwd-and-right",
+      "fontsize": "15",
+      "label": "right",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 23,
+      "name": "the-bwd-and-right-the",
+      "fontsize": "15",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 24,
+      "name": "to-bwd-and-right-the-to",
+      "fontsize": "15",
+      "label": "to",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 25,
+      "name": "off-bwd-and-off",
+      "fontsize": "15",
+      "label": "off",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 26,
+      "name": "taking-bwd-and-off-taking",
+      "fontsize": "15",
+      "label": "taking",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 27,
+      "name": "after-bwd-and-off-taking-after",
+      "fontsize": "15",
+      "label": "after",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 28,
+      "name": "plane-bwd-plane",
+      "fontsize": "24",
+      "label": "plane",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 29,
+      "name": "the-bwd-plane-the",
+      "fontsize": "22",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 30,
+      "name": "and-bwd-plane-the-and",
+      "fontsize": "16",
+      "label": "and",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 31,
+      "name": "cargo-bwd-plane-cargo",
+      "fontsize": "19",
+      "label": "cargo",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 32,
+      "name": "the-bwd-plane-cargo-the",
+      "fontsize": "19",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 33,
+      "name": "mail-bwd-plane-mail",
+      "fontsize": "16",
+      "label": "mail",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 34,
+      "name": "the-bwd-plane-mail-the",
+      "fontsize": "16",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 35,
+      "name": "aircraft-bwd-aircraft",
+      "fontsize": "24",
+      "label": "aircraft",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 36,
+      "name": "the-bwd-aircraft-the",
+      "fontsize": "24",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 37,
+      "name": "it-bwd-it",
+      "fontsize": "18",
+      "label": "it",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 38,
+      "name": "when-bwd-it-when",
+      "fontsize": "16",
+      "label": "when",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 39,
+      "name": "helicopter-bwd-helicopter",
+      "fontsize": "17",
+      "label": "helicopter",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 40,
+      "name": "the-bwd-helicopter-the",
+      "fontsize": "17",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 41,
+      "name": "flight-bwd-flight",
+      "fontsize": "17",
+      "label": "flight",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 42,
+      "name": "but-bwd-but",
+      "fontsize": "17",
+      "label": "but",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 43,
+      "name": "airliner-bwd-airliner",
+      "fontsize": "16",
+      "label": "airliner",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 44,
+      "name": "into-fwd-into",
+      "fontsize": "30",
+      "label": "into",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 45,
+      "name": "a-fwd-into-a",
+      "fontsize": "24",
+      "label": "a",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 46,
+      "name": "mountain-fwd-into-a-mountain",
+      "fontsize": "19",
+      "label": "mountain",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 47,
+      "name": "while-fwd-into-a-mountain-while",
+      "fontsize": "16",
+      "label": "while",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 48,
+      "name": "at-fwd-into-a-mountain-at",
+      "fontsize": "16",
+      "label": "at",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 49,
+      "name": "hill-fwd-into-a-hill",
+      "fontsize": "17",
+      "label": "hill",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 50,
+      "name": "the-fwd-into-the",
+      "fontsize": "23",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 51,
+      "name": "sea-fwd-into-the-sea",
+      "fontsize": "18",
+      "label": "sea",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 52,
+      "name": "sea.-fwd-into-the-sea.",
+      "fontsize": "17",
+      "label": "sea.",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 53,
+      "name": "in-fwd-in",
+      "fontsize": "22",
+      "label": "in",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 54,
+      "name": "a-fwd-in-a",
+      "fontsize": "18",
+      "label": "a",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 55,
+      "name": "the-fwd-in-the",
+      "fontsize": "18",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 56,
+      "name": "while-fwd-while",
+      "fontsize": "22",
+      "label": "while",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 57,
+      "name": "attempting-fwd-while-attempting",
+      "fontsize": "18",
+      "label": "attempting",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 58,
+      "name": "to-fwd-while-attempting-to",
+      "fontsize": "18",
+      "label": "to",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 59,
+      "name": "land-fwd-while-attempting-to-land",
+      "fontsize": "16",
+      "label": "land",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 60,
+      "name": "land.-fwd-while-attempting-to-land.",
+      "fontsize": "16",
+      "label": "land.",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 61,
+      "name": "en-fwd-while-en",
+      "fontsize": "16",
+      "label": "en",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 62,
+      "name": "route.-fwd-while-en-route.",
+      "fontsize": "16",
+      "label": "route.",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 63,
+      "name": "and-fwd-and",
+      "fontsize": "20",
+      "label": "and",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 64,
+      "name": "burned-fwd-and-burned",
+      "fontsize": "18",
+      "label": "burned",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 65,
+      "name": "after-fwd-after",
+      "fontsize": "20",
+      "label": "after",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 66,
+      "name": "on-fwd-on",
+      "fontsize": "20",
+      "label": "on",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 67,
+      "name": "during-fwd-during",
+      "fontsize": "19",
+      "label": "during",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 68,
+      "name": "shortly-fwd-shortly",
+      "fontsize": "19",
+      "label": "shortly",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 69,
+      "name": "after-fwd-shortly-after",
+      "fontsize": "19",
+      "label": "after",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 70,
+      "name": "taking-fwd-shortly-after-taking",
+      "fontsize": "18",
+      "label": "taking",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 71,
+      "name": "off-fwd-shortly-after-taking-off",
+      "fontsize": "17",
+      "label": "off",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 72,
+      "name": "off.-fwd-shortly-after-taking-off.",
+      "fontsize": "16",
+      "label": "off.",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 73,
+      "name": "short-fwd-short",
+      "fontsize": "18",
+      "label": "short",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 74,
+      "name": "of-fwd-short-of",
+      "fontsize": "18",
+      "label": "of",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 75,
+      "name": "the-fwd-short-of-the",
+      "fontsize": "18",
+      "label": "the",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 76,
+      "name": "runway-fwd-short-of-the-runway",
+      "fontsize": "17",
+      "label": "runway",
+      "margin": "0",
+      "shape": "plaintext"
+    },
+    {
+      "_gvid": 77,
+      "name": "runway.-fwd-short-of-the-runway.",
+      "fontsize": "16",
+      "label": "runway.",
+      "margin": "0",
+      "shape": "plaintext"
+    }
+  ],
+  "edges": [
+    {
+      "_gvid": 0,
+      "tail": 0,
+      "head": 44
+    },
+    {
+      "_gvid": 1,
+      "tail": 0,
+      "head": 53
+    },
+    {
+      "_gvid": 2,
+      "tail": 0,
+      "head": 56
+    },
+    {
+      "_gvid": 3,
+      "tail": 0,
+      "head": 63
+    },
+    {
+      "_gvid": 4,
+      "tail": 0,
+      "head": 65
+    },
+    {
+      "_gvid": 5,
+      "tail": 0,
+      "head": 66
+    },
+    {
+      "_gvid": 6,
+      "tail": 0,
+      "head": 67
+    },
+    {
+      "_gvid": 7,
+      "tail": 0,
+      "head": 68
+    },
+    {
+      "_gvid": 8,
+      "tail": 0,
+      "head": 73
+    },
+    {
+      "_gvid": 9,
+      "tail": 1,
+      "head": 0
+    },
+    {
+      "_gvid": 10,
+      "tail": 2,
+      "head": 1
+    },
+    {
+      "_gvid": 11,
+      "tail": 3,
+      "head": 2
+    },
+    {
+      "_gvid": 12,
+      "tail": 4,
+      "head": 3
+    },
+    {
+      "_gvid": 13,
+      "tail": 5,
+      "head": 1
+    },
+    {
+      "_gvid": 14,
+      "tail": 6,
+      "head": 5
+    },
+    {
+      "_gvid": 15,
+      "tail": 7,
+      "head": 6
+    },
+    {
+      "_gvid": 16,
+      "tail": 8,
+      "head": 1
+    },
+    {
+      "_gvid": 17,
+      "tail": 9,
+      "head": 8
+    },
+    {
+      "_gvid": 18,
+      "tail": 10,
+      "head": 1
+    },
+    {
+      "_gvid": 19,
+      "tail": 11,
+      "head": 10
+    },
+    {
+      "_gvid": 20,
+      "tail": 12,
+      "head": 11
+    },
+    {
+      "_gvid": 21,
+      "tail": 13,
+      "head": 1
+    },
+    {
+      "_gvid": 22,
+      "tail": 14,
+      "head": 13
+    },
+    {
+      "_gvid": 23,
+      "tail": 15,
+      "head": 14
+    },
+    {
+      "_gvid": 24,
+      "tail": 16,
+      "head": 1
+    },
+    {
+      "_gvid": 25,
+      "tail": 17,
+      "head": 16
+    },
+    {
+      "_gvid": 26,
+      "tail": 18,
+      "head": 17
+    },
+    {
+      "_gvid": 27,
+      "tail": 19,
+      "head": 1
+    },
+    {
+      "_gvid": 28,
+      "tail": 20,
+      "head": 19
+    },
+    {
+      "_gvid": 29,
+      "tail": 21,
+      "head": 20
+    },
+    {
+      "_gvid": 30,
+      "tail": 22,
+      "head": 1
+    },
+    {
+      "_gvid": 31,
+      "tail": 23,
+      "head": 22
+    },
+    {
+      "_gvid": 32,
+      "tail": 24,
+      "head": 23
+    },
+    {
+      "_gvid": 33,
+      "tail": 25,
+      "head": 1
+    },
+    {
+      "_gvid": 34,
+      "tail": 26,
+      "head": 25
+    },
+    {
+      "_gvid": 35,
+      "tail": 27,
+      "head": 26
+    },
+    {
+      "_gvid": 36,
+      "tail": 28,
+      "head": 0
+    },
+    {
+      "_gvid": 37,
+      "tail": 29,
+      "head": 28
+    },
+    {
+      "_gvid": 38,
+      "tail": 30,
+      "head": 29
+    },
+    {
+      "_gvid": 39,
+      "tail": 31,
+      "head": 28
+    },
+    {
+      "_gvid": 40,
+      "tail": 32,
+      "head": 31
+    },
+    {
+      "_gvid": 41,
+      "tail": 33,
+      "head": 28
+    },
+    {
+      "_gvid": 42,
+      "tail": 34,
+      "head": 33
+    },
+    {
+      "_gvid": 43,
+      "tail": 35,
+      "head": 0
+    },
+    {
+      "_gvid": 44,
+      "tail": 36,
+      "head": 35
+    },
+    {
+      "_gvid": 45,
+      "tail": 37,
+      "head": 0
+    },
+    {
+      "_gvid": 46,
+      "tail": 38,
+      "head": 37
+    },
+    {
+      "_gvid": 47,
+      "tail": 39,
+      "head": 0
+    },
+    {
+      "_gvid": 48,
+      "tail": 40,
+      "head": 39
+    },
+    {
+      "_gvid": 49,
+      "tail": 41,
+      "head": 0
+    },
+    {
+      "_gvid": 50,
+      "tail": 42,
+      "head": 0
+    },
+    {
+      "_gvid": 51,
+      "tail": 43,
+      "head": 0
+    },
+    {
+      "_gvid": 52,
+      "tail": 44,
+      "head": 45
+    },
+    {
+      "_gvid": 53,
+      "tail": 44,
+      "head": 50
+    },
+    {
+      "_gvid": 54,
+      "tail": 45,
+      "head": 46
+    },
+    {
+      "_gvid": 55,
+      "tail": 45,
+      "head": 49
+    },
+    {
+      "_gvid": 56,
+      "tail": 46,
+      "head": 47
+    },
+    {
+      "_gvid": 57,
+      "tail": 46,
+      "head": 48
+    },
+    {
+      "_gvid": 58,
+      "tail": 50,
+      "head": 51
+    },
+    {
+      "_gvid": 59,
+      "tail": 50,
+      "head": 52
+    },
+    {
+      "_gvid": 60,
+      "tail": 53,
+      "head": 54
+    },
+    {
+      "_gvid": 61,
+      "tail": 53,
+      "head": 55
+    },
+    {
+      "_gvid": 62,
+      "tail": 56,
+      "head": 57
+    },
+    {
+      "_gvid": 63,
+      "tail": 56,
+      "head": 61
+    },
+    {
+      "_gvid": 64,
+      "tail": 57,
+      "head": 58
+    },
+    {
+      "_gvid": 65,
+      "tail": 58,
+      "head": 59
+    },
+    {
+      "_gvid": 66,
+      "tail": 58,
+      "head": 60
+    },
+    {
+      "_gvid": 67,
+      "tail": 61,
+      "head": 62
+    },
+    {
+      "_gvid": 68,
+      "tail": 63,
+      "head": 64
+    },
+    {
+      "_gvid": 69,
+      "tail": 68,
+      "head": 69
+    },
+    {
+      "_gvid": 70,
+      "tail": 69,
+      "head": 70
+    },
+    {
+      "_gvid": 71,
+      "tail": 70,
+      "head": 71
+    },
+    {
+      "_gvid": 72,
+      "tail": 70,
+      "head": 72
+    },
+    {
+      "_gvid": 73,
+      "tail": 73,
+      "head": 74
+    },
+    {
+      "_gvid": 74,
+      "tail": 74,
+      "head": 75
+    },
+    {
+      "_gvid": 75,
+      "tail": 75,
+      "head": 76
+    },
+    {
+      "_gvid": 76,
+      "tail": 75,
+      "head": 77
+    }
+  ]
+}

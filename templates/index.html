@@ -38,11 +38,11 @@
         </div>
         <div class="row pt-1">
             <div class="col-md-5 pl-0 pr-1">
-                <iframe id="wc" src="/word_cloud" width=500px height=500px margin=auto scrolling="no"></iframe>
+                <iframe id="wc" src="/word_cloud" width="100%" height=500px scrolling="no"></iframe>
             </div>
 
             <div class="col-md-7 pr-0 pl-1">
-                <iframe src="/world_map" class="iframe-container"></iframe>
+                <iframe src="/world_tree" width="100%" height=500px scrolling="no"></iframe>
 
             </div>
         </div>
@@ -51,11 +51,6 @@
 
 </body>
 
-<script>
-    $('#wc').load(function () {
-        $(this).height($(this).contents().height());
-        $(this).width($(this).contents().width());
-    });
-</script>
+
 
 </html>
