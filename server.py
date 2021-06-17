@@ -1,5 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask.templating import render_template
+from flask.wrappers import Request
 from pca_test import wordcloud_from_cvs
 import random
 import wordtreegen
@@ -14,10 +15,15 @@ def world_map():
 
 @app.route("/wt_data")
 def wt_data():
-    return wordtreegen.generate_json("dataset.csv", "crashed")
+
+    word = request.args.get("starting_word")
+
+    print(word)
+
+    return wordtreegen.generate_json("dataset.csv", word if word is not None else "crashed")
 
 
-@app.route("/wc_data")
+@ app.route("/wc_data")
 def wc_data():
     words = wordcloud_from_cvs("dataset.csv", 25, (25, 75))
     return jsonify({"data": words})

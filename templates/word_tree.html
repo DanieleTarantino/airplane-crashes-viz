@@ -34,6 +34,8 @@
 
     <script type="text/javascript">
 
+
+
         var w = 1280, h = 500, i = 0, root;
 
         var tree = d3.layout.tree()
@@ -163,6 +165,14 @@
         window.addEventListener("message", (event) => {
             let word = event.data;
             console.log(word);
+            var w = $.ajax({
+                url: "wt_data", data: { "starting_word": word }, async: false, success: function (x) {
+                    root = x;
+                    root.x0 = h / 2;
+                    root.y0 = 0;
+                    update(x);
+                }
+            });
         }, false);
 
     </script>
