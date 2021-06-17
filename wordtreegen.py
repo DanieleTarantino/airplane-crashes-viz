@@ -2,8 +2,11 @@ import wordtree
 import pandas as pd
 import networkx as nx
 import pydotplus
+from nltk.tokenize import word_tokenize
 import re
 import json
+
+from string import punctuation, digits
 
 
 class FreqNode():
@@ -11,11 +14,6 @@ class FreqNode():
         self.name = kw
         self.children = children
         self.freq = freq
-
-    def __str__(self):
-        print(self.name)
-        for c in self.children:
-            print(" " + str(c))
 
 
 def build_tree(kw, ngrams, frequencies):
@@ -49,7 +47,8 @@ def build_both_trees(keyword, ngrams, frequencies):
 
     fwd_tree = build_tree(keyword, fwd_ngrams, fwd_frequencies)
 
-    return fwd_tree 
+    return fwd_tree
+
 
 def visit(out, edges):
 
@@ -61,11 +60,33 @@ def visit(out, edges):
     return out
 
 
+def custom_tokenizer(st):
+    return word_tokenize(
+        st.lower()
+        .encode("ascii", "ignore")
+        .decode("ascii")
+        .strip()
+        .translate(str.maketrans(punctuation, " " * len(punctuation)))
+        .translate(str.maketrans(digits, " " * len(digits))).strip()
+    )
+
+
 def generate_json(filename, keyword):
     ds = pd.read_csv(filename)
     ds = ds["Summary"].dropna().to_list()
 
-    g = wordtree.search_and_draw(corpus=ds, keyword=keyword)
+    print(ds[0])
+
+    # for i in range(len(ds)):
+    #     ds[i] = ds[i].replace(". ", " ")
+    #     ds[i] = ds[i].replace(".", " ")
+
+    # ds = list(map(lambda x: x.replace(".", " "), ds))
+
+    print(ds)
+
+    g = wordtree.search_and_draw(
+        corpus=ds, keyword=keyword, tokenizer=custom_tokenizer)
     dotplus = pydotplus.graph_from_dot_data(g.source)
     nx_graph = nx.nx_pydot.from_pydot(dotplus)
 
@@ -84,9 +105,8 @@ def generate_json(filename, keyword):
     out = visit({'name': keyword, "children": []}, d)
 
     st = json.dumps(out)
-
     tokens = re.findall(".*?\"name\": \"(.*?)\".*?", st)
 
     for t in tokens:
-        st = st.replace(t, t.split("-")[-1])
+        st = st.replace('"'+t+'"', '"'+t.split("-")[-1]+'"')
     return json.loads(st)
