@@ -48,10 +48,8 @@ def build_both_trees(keyword, ngrams, frequencies):
             bwd_frequencies.append(freq)
 
     fwd_tree = build_tree(keyword, fwd_ngrams, fwd_frequencies)
-    # bwd_tree = build_tree(keyword, bwd_ngrams, bwd_frequencies)
 
-    return fwd_tree  # , bwd_tree
-
+    return fwd_tree 
 
 def visit(out, edges):
 

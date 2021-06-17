@@ -7,10 +7,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
     <script src="https://d3js.org/d3.v3.min.js"></script>
-    <style type="text/css">
+
+    <style>
         .node circle {
             cursor: pointer;
             fill: #fff;
@@ -31,15 +30,11 @@
 </head>
 
 <body>
-    <div id="wt">
-    </div>
+    <div id="wt"></div>
+
     <script type="text/javascript">
 
-        var m = [10, 5, 20, 60],
-            w = 1280 - m[1] - m[3],
-            h = 500 - m[0] - m[2],
-            i = 0,
-            root;
+        var w = 1280, h = 500, i = 0, root;
 
         var tree = d3.layout.tree()
             .size([h, w]);
@@ -48,27 +43,17 @@
             .projection(function (d) { return [d.y, d.x]; });
 
         var vis = d3.select("#wt").append("svg:svg")
-            .attr("width", w + m[1] + m[3])
-            .attr("height", h + m[0] + m[2])
+            .attr("width", w)
+            .attr("height", h)
             .append("svg:g")
-            .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
-
+            .attr("transform", "translate(100,0)");
 
         var w = $.ajax({
             url: "wt_data", async: false, success: function (x) {
-                json = x;
-                root = json;
+                root = x;
                 root.x0 = h / 2;
                 root.y0 = 0;
 
-                function toggleAll(d) {
-                    if (d.children) {
-                        d.children.forEach(toggleAll);
-                        toggle(d);
-                    }
-                }
-
-                // root.children.forEach(toggleAll);
                 update(root);
             }
         });
@@ -101,7 +86,6 @@
                 .attr("dy", ".35em")
                 .attr("text-anchor", function (d) { return d.children || d._children ? "end" : "start"; })
                 .attr("font-family", "monospace")
-                .attr("font-size", "150px")
                 .text(function (d) { return d.name; })
                 .style("fill-opacity", 1e-6);
 

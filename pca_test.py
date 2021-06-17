@@ -80,34 +80,8 @@ def work(X, nwords, size):
 
     return list(zip(x, y))
 
-    # for ind in order_centroids[0, :N_WORDS]:
-    #     print(" %s" % terms[ind])
-
-    # for i in range(N_CLUSTERS):
-    #     print("Cluster %d:" % i)
-    #     word_weight_dic = {}
-    #     for ind in order_centroids[i, :N_WORDS]:
-    #         print(" %s" % terms[ind])
-    #         word_weight_dic[terms[ind]] = vectorizer.idf_[ind]
-
-    #     print()
-    #     wordcloud = WordCloud(background_color="white").generate_from_frequencies(
-    #         word_weight_dic
-    #     )
-
-    #     plt.subplot(1, N_CLUSTERS, i + 1)
-    #     plt.title("Cluster %d" % (i + 1), pad=20)
-    #     plt.imshow(wordcloud, interpolation="bilinear")
-    #     plt.axis("off")
-    # plt.show()
-
 
 if __name__ == "__main__":
-    # ds = []
-    # f = open("dataset.csv", "r")
-    # for line in f.readlines():
-    #     ds.append(line.split(",")[-1].strip())
     ds = pd.read_csv("dataset.csv")
     ds = ds["Summary"].dropna().to_list()
-    # exit()
     work(ds, 10)

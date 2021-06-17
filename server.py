@@ -23,9 +23,9 @@ def wc_data():
     return jsonify({"data": words})
 
 
-@ app.route("/world_tree")
+@ app.route("/word_tree")
 def word_tree():
-    return render_template("world_tree.html")
+    return render_template("word_tree.html")
 
 
 @ app.route("/word_cloud")
