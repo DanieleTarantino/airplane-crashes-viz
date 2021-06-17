@@ -42,9 +42,16 @@
             </div>
 
             <div class="col-md-7 pr-0 pl-1 pr-1">
-                <iframe src="/word_tree" width="100%" height=500px scrolling="no"></iframe>
+                <iframe id="wt" src="/word_tree" width="100%" height=500px scrolling="no"></iframe>
             </div>
         </div>
     </div>
+
+    <script>
+
+    window.addEventListener("message", (event) => {
+        document.getElementById("wt").contentWindow.postMessage(event.data, '*')
+    }, false);
+    </script>
 </body>
 </html>

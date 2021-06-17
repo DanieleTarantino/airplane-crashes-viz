@@ -160,6 +160,11 @@
             }
         }
 
+        window.addEventListener("message", (event) => {
+            let word = event.data;
+            console.log(word);
+        }, false);
+
     </script>
 </body>
 
