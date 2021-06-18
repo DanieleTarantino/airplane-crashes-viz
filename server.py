@@ -5,7 +5,7 @@ import wordcloudgen
 import wordtreegen
 import nltk
 
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
 
 """
@@ -13,10 +13,13 @@ app = Flask(__name__, template_folder="templates")
 Methods used to generate json files needed for visualizations
 ===============================================================================
 """
+
+
 @app.route("/wt_data")
 def wt_data():
     word = request.args.get("starting_word")
     return wordtreegen.generate_json("dataset.csv", word if word is not None else "crashed")
+
 
 @ app.route("/wc_data")
 def wc_data():
@@ -29,21 +32,27 @@ def wc_data():
 Methods used to render visualization pages inside iframes
 ===============================================================================
 """
+
+
 @app.route("/world_map")
 def world_map():
     return render_template("world_map.html")
+
 
 @ app.route("/word_tree")
 def word_tree():
     return render_template("word_tree.html")
 
+
 @ app.route("/word_cloud")
 def word_cloud():
     return render_template("word_cloud.html")
 
+
 @ app.route("/line_chart")
 def line_char():
     return render_template("line_char.html")
+
 
 @ app.route("/histogram")
 def histogram():
@@ -55,10 +64,11 @@ def histogram():
 Root route
 ===============================================================================
 """
+
+
 @ app.route("/")
 def main():
     return render_template("index.html")
-
 
 
 if __name__ == '__main__':

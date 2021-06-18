@@ -7,8 +7,11 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+    <!-- Don't change order of following imports -->
+    <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
     <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+
 
     <style>
         #cloud {
@@ -51,9 +54,9 @@
                     .attr("text-anchor", "middle")
                     .text(function (d) { return d.text; })
                     .style("cursor", "pointer")
-                    .on("click", 
-                        function(d) {
-                                window.parent.window.postMessage(d.text, '*')
+                    .on("click",
+                        function (d) {
+                            window.parent.window.postMessage(d.text, '*')
                         })
 
                 //Entering and existing words
@@ -115,4 +118,5 @@
         myWordCloud.update(getWords());
     </script>
 </body>
+
 </html>
