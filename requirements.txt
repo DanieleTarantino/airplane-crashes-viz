@@ -1,0 +1,7 @@
+Flask
+nltk
+sklearn
+pandas
+pydotplus
+networkx
+wordtree

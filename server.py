@@ -3,6 +3,7 @@ from flask.templating import render_template
 from flask.wrappers import Request
 import wordcloudgen
 import wordtreegen
+import nltk
 
 app = Flask(__name__, template_folder="templates")
 
@@ -61,4 +62,10 @@ def main():
 
 
 if __name__ == '__main__':
+
+    # download ntlk required data
+    nltk.download('punkt')
+    nltk.download('wordnet')
+    nltk.download('stopwords')
+
     app.run(host='0.0.0.0', port=31337, debug=True)
