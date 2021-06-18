@@ -1,47 +1,63 @@
 from flask import Flask, jsonify, request
 from flask.templating import render_template
 from flask.wrappers import Request
-from pca_test import wordcloud_from_cvs
-import random
+import wordcloudgen
 import wordtreegen
 
 app = Flask(__name__, template_folder="templates")
 
 
-@app.route("/world_map")
-def world_map():
-    return render_template("world_map.html")
-
-
+"""
+===============================================================================
+Methods used to generate json files needed for visualizations
+===============================================================================
+"""
 @app.route("/wt_data")
 def wt_data():
-
     word = request.args.get("starting_word")
-
-    print(word)
-
     return wordtreegen.generate_json("dataset.csv", word if word is not None else "crashed")
-
 
 @ app.route("/wc_data")
 def wc_data():
-    words = wordcloud_from_cvs("dataset.csv", 25, (25, 75))
+    words = wordcloudgen.wordcloud_from_cvs("dataset.csv", 25, (25, 75))
     return jsonify({"data": words})
 
+
+"""
+===============================================================================
+Methods used to render visualization pages inside iframes
+===============================================================================
+"""
+@app.route("/world_map")
+def world_map():
+    return render_template("world_map.html")
 
 @ app.route("/word_tree")
 def word_tree():
     return render_template("word_tree.html")
 
-
 @ app.route("/word_cloud")
 def word_cloud():
     return render_template("word_cloud.html")
 
+@ app.route("/line_chart")
+def line_char():
+    return render_template("line_char.html")
 
+@ app.route("/histogram")
+def histogram():
+    return render_template("histogram.html")
+
+
+"""
+===============================================================================
+Root route
+===============================================================================
+"""
 @ app.route("/")
 def main():
     return render_template("index.html")
+
 
 
 if __name__ == '__main__':
