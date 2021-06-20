@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask.templating import render_template
 from flask.wrappers import Request
 import wordcloudgen
@@ -21,7 +21,17 @@ def wt_data():
     return wordtreegen.generate_json("dataset.csv", word if word is not None else "crashed")
 
 
-@ app.route("/wc_data")
+@ app.route("/dataset_enhanced.csv")
+def get_ds():
+    return send_file("dataset_enhanced.csv")
+
+
+@ app.route("/countries.geojson")
+def geojson():
+    return send_file("countries.geojson")
+
+
+@app.route("/wc_data")
 def wc_data():
     words = wordcloudgen.wordcloud_from_cvs("dataset.csv", 25, (25, 75))
     return jsonify({"data": words})
