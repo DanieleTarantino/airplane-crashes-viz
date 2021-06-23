@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        text {
+            font-family: arial;
+            font-size: 12px;
+        }
+
+
+        path.line {
+            fill: none;
+            stroke: red;
+            stroke-width: 3px;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: slategray;
+            shape-rendering: crispEdges;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="line_chart"></div>
+
+    <script>
+
+        var parseDate = d3.time.format("%Y").parse;
+
+        var margin = { left: 0, right: 0, top: 0, bottom: 00 };
+
+        var width = 500 - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+
+        var max = 0;
+
+        var xNudge = 0;
+        var yNudge = 0;
+
+        var minDate = new Date();
+        var maxDate = new Date();
+
+        d3.csv("/dataset_enhanced.csv")
+            .row(function (d) { return { date: d.Year, value: d.Aboard }; })
+            .get(function (error, data) {
+
+                var d = {};
+                for (var elem of data) {
+
+                    if (!(elem.date in d)) {
+                        d[elem.date] = 0;
+                    }
+                    if (elem.value) {
+                        d[elem.date] += parseInt(elem.value);
+
+                    }
+                }
+
+                data = d;
+
+                var w = [];
+
+                for (const [key, value] of Object.entries(data)) {
+                    w.push({ date: key, value: value });
+                }
+                data = w;
+
+                console.log(w);
+                max = d3.max(data, function (d) { return d.value; });
+                minDate = d3.min(data, function (d) { return d.date; });
+                maxDate = d3.max(data, function (d) { return d.date; });
+                console.log(max, minDate, maxDate);
+
+                var y = d3.scale.linear()
+                    .domain([0, max])
+                    .range([height, 0]);
+
+                var x = d3.scale.linear()
+                    .domain([minDate, maxDate])
+                    .range([0, width]);
+
+                var yAxis = d3.svg.axis()
+                    .orient("left")
+                    .scale(y);
+
+                var xAxis = d3.svg.axis()
+                    .orient("bottom")
+                    .scale(x);
+
+                var line = d3.svg.line()
+                    .x(function (d) { return x(d.date); })
+                    .y(function (d) { return y(d.value); })
+                    .interpolate("cardinal");
+
+
+                var svg = d3.select("#line_chart").append("svg").attr("id", "svg").attr("height", height).attr("width", width);
+                var chartGroup = svg.append("g").attr("class", "chartGroup").attr("transform", "translate(" + xNudge + "," + yNudge + ")");
+
+                chartGroup.append("path")
+                    .attr("class", "line")
+                    .attr("d", function (d) { return line(data); })
+
+
+                chartGroup.append("g")
+                    .attr("class", "axis x")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                chartGroup.append("g")
+                    .attr("class", "axis y")
+                    .call(yAxis);
+            });
+
+
+
+
+        /*
+        // set the dimensions and margins of the graph
+        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
+            width = 600 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        var svg = d3.select("#my_dataviz")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        //Read the data
+        d3.csv("dataset_enhanced.csv", function (d) {
+            return { date: d.Year, value: d.Aboard }
+        },
+            function (d) {
+                var data = {};
+                for (var elem of d) {
+
+                    if (!(elem.date in data)) {
+                        data[elem.date] = 0;
+                    }
+                    if (elem.value) {
+                        data[elem.date] += parseInt(elem.value);
+
+                    }
+                }
+                console.log("CALLED");
+                var x = d3.scale.linear()
+                    .domain([0, d3.max(data, function (d) { return +d.date; })])
+                    .range([0, width]);
+
+                svg.append("g")
+                    .attr("transform", "translate(0," + height - 50 + ")")
+                    .call(d3.svg.axis().orient("bottom").scale(x));
+
+                var y = d3.scale.linear()
+                    .domain([0, d3.max(data, function (d) { return +d.value; })])
+                    .range([height, 0]);
+
+                svg.append("g")
+                    .call(d3.svg.axis().orient("left").scale(y));
+
+                svg.append("path")
+                    .datum(data)
+                    .attr("fill", "none")
+                    .attr("stroke", "steelblue")
+                    .attr("stroke-width", 1.5)
+                    .attr("d", d3.svg.line()
+                        .x(function (d) { return x(d.date) })
+                        .y(function (d) { return y(d.value) })
+                    )
+            });
+            */
+
+    </script>
+</body>
+
+</html>

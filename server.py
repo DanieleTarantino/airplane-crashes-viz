@@ -37,6 +37,13 @@ def wc_data():
     return jsonify({"data": words})
 
 
+# @app.route("/line_chart")
+# def line_chart():
+#     return send_file("dataset_enhanced.csv")
+#     # return jsonify({1900: [10, 42], 2000: [42, 442]})
+#     # return "<script>alert(1)</script>"
+
+
 """
 ===============================================================================
 Methods used to render visualization pages inside iframes
@@ -61,7 +68,7 @@ def word_cloud():
 
 @ app.route("/line_chart")
 def line_char():
-    return render_template("line_char.html")
+    return render_template("line_chart.html")
 
 
 @ app.route("/histogram")

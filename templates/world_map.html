@@ -58,13 +58,15 @@
                 .append("path")
                 .attr("class", "continent")
                 .attr("d", path);
+
+            d3.csv("dataset_enhanced.csv", function (csv) {
+                initialData = csv;
+                drawAllData();
+                drawFilteredData();
+            });
         });
 
-        d3.csv("dataset_enhanced.csv", function (csv) {
-            initialData = csv;
-            drawAllData();
-            drawFilteredData();
-        });
+
 
         function drawAllData() {
             svg.selectAll("circle")
