@@ -3,6 +3,7 @@ from flask.templating import render_template
 from flask.wrappers import Request
 import wordcloudgen
 import wordtreegen
+import histogramgen
 import nltk
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -37,12 +38,17 @@ def wc_data():
     return jsonify({"data": words})
 
 
+@app.route("/hist.json")
+def get_histogram():
+    js = histogramgen.get_histogram_as_json()
+    return jsonify(js)
+
+
 # @app.route("/line_chart")
 # def line_chart():
 #     return send_file("dataset_enhanced.csv")
 #     # return jsonify({1900: [10, 42], 2000: [42, 442]})
 #     # return "<script>alert(1)</script>"
-
 
 """
 ===============================================================================
