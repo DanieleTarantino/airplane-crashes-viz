@@ -45,16 +45,14 @@
 
         var parseDate = d3.time.format("%Y").parse;
 
-        var margin = { left: 0, right: 0, top: 0, bottom: 00 };
-
-        var width = 500 - margin.left - margin.right;
+        var margin = { left: 10, right: 10, top: 10, bottom: 10 };
+        var width = 600 - margin.left - margin.right;
         var height = 400 - margin.top - margin.bottom;
-
 
         var max = 0;
 
-        var xNudge = 0;
-        var yNudge = 0;
+        var xNudge = 45;
+        var yNudge = -20;
 
         var minDate = new Date();
         var maxDate = new Date();
@@ -92,11 +90,11 @@
 
                 var y = d3.scale.linear()
                     .domain([0, max])
-                    .range([height, 0]);
+                    .range([height, 0 - yNudge]);
 
                 var x = d3.scale.linear()
                     .domain([minDate, maxDate])
-                    .range([0, width]);
+                    .range([0, width - xNudge]);
 
                 var yAxis = d3.svg.axis()
                     .orient("left")
