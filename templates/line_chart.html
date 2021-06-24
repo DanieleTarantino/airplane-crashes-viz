@@ -39,8 +39,8 @@
 
 
 <body>
-    <div id="line_chart"></div>
 
+    <div id="select_plot"></div>
     <script>
 
         var parseDate = d3.time.format("%Y").parse;
@@ -50,145 +50,116 @@
         var height = 400 - margin.top - margin.bottom;
 
         var max = 0;
+        var minDate = 0;
+        var maxDate = 0;
 
-        var xNudge = 45;
-        var yNudge = -20;
+        var xNudge = 50;
+        var yNudge = -50;
 
-        var minDate = new Date();
-        var maxDate = new Date();
+        function draw(select) {
 
-        d3.csv("/dataset_enhanced.csv")
-            .row(function (d) { return { date: d.Year, value: d.Aboard }; })
-            .get(function (error, data) {
+            d3.select("#line_chart").remove()
+            d3.select("body").append("div").attr('id', 'line_chart')
+            d3.csv("/dataset_enhanced.csv")
+                .row(function (d) { 
+                            return { date: d.Year, value: [d.Aboard, d.Ground] }; 
+                        })
+                .get(function (error, data) {
 
-                var d = {};
-                for (var elem of data) {
+                    var d = {};
+                    for (var elem of data) {
 
-                    if (!(elem.date in d)) {
-                        d[elem.date] = 0;
+                        if (!(elem.date in d)) {
+                            d[elem.date] = 0;
+                        }
+                        if (select == 'Aboard') {
+                            if (elem.value[0]) {
+                                d[elem.date] += parseInt(elem.value[0]);
+                            }
+                        }
+                        else if (select == 'Ground') {
+                            if (elem.value[1]) {
+                                d[elem.date] += parseInt(elem.value[1]);
+                            }
+                        }
+                        else {
+                            if (elem.value[0]) {
+                                d[elem.date] += parseInt(elem.value[0]);
+                            }
+                            if (elem.value[1]) {
+                                d[elem.date] += parseInt(elem.value[1]);
+                            }
+                        }
                     }
-                    if (elem.value) {
-                        d[elem.date] += parseInt(elem.value);
-
+                    data = d;
+                    var w = [];
+                    for (const [key, value] of Object.entries(data)) {
+                        w.push({ date: key, value: value });
                     }
-                }
+                    data = w;
 
-                data = d;
+                    console.log(data)
 
-                var w = [];
+                    max = d3.max(data, function (d) { return d.value; });
+                    minDate = d3.min(data, function (d) { return d.date; });
+                    maxDate = d3.max(data, function (d) { return d.date; });
 
-                for (const [key, value] of Object.entries(data)) {
-                    w.push({ date: key, value: value });
-                }
-                data = w;
+                    var y = d3.scale.linear()
+                        .domain([0, max])
+                        .range([height, 0 - yNudge]);
 
-                console.log(w);
-                max = d3.max(data, function (d) { return d.value; });
-                minDate = d3.min(data, function (d) { return d.date; });
-                maxDate = d3.max(data, function (d) { return d.date; });
-                console.log(max, minDate, maxDate);
+                    var x = d3.scale.linear()
+                        .domain([minDate, maxDate])
+                        .range([0, width - xNudge]);
 
-                var y = d3.scale.linear()
-                    .domain([0, max])
-                    .range([height, 0 - yNudge]);
+                    var yAxis = d3.svg.axis()
+                        .orient("left")
+                        .scale(y);
 
-                var x = d3.scale.linear()
-                    .domain([minDate, maxDate])
-                    .range([0, width - xNudge]);
+                    var xAxis = d3.svg.axis()
+                        .orient("bottom")
+                        .scale(x);
 
-                var yAxis = d3.svg.axis()
-                    .orient("left")
-                    .scale(y);
+                    var line = d3.svg.line()
+                        .x(function (d) { return x(d.date); })
+                        .y(function (d) { return y(d.value); })
 
-                var xAxis = d3.svg.axis()
-                    .orient("bottom")
-                    .scale(x);
+                    var svg = d3.select("#line_chart").append("svg").attr("id", "svg").attr("height", height).attr("width", width);
+                    var chartGroup = svg.append("g").attr("class", "chartGroup").attr("transform", "translate(" + xNudge + "," + yNudge + ")");
 
-                var line = d3.svg.line()
-                    .x(function (d) { return x(d.date); })
-                    .y(function (d) { return y(d.value); })
-                    .interpolate("cardinal");
+                    chartGroup.append("path")
+                        .attr("class", "line")
+                        .attr("d", function (d) { return line(data); })
 
 
-                var svg = d3.select("#line_chart").append("svg").attr("id", "svg").attr("height", height).attr("width", width);
-                var chartGroup = svg.append("g").attr("class", "chartGroup").attr("transform", "translate(" + xNudge + "," + yNudge + ")");
+                    chartGroup.append("g")
+                        .attr("class", "axis x")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis);
 
-                chartGroup.append("path")
-                    .attr("class", "line")
-                    .attr("d", function (d) { return line(data); })
+                    chartGroup.append("g")
+                        .attr("class", "axis y")
+                        .call(yAxis);
+                });
+        }
 
+        var select = d3.select('#select_plot')
+                        .append('select')
+                        .attr('class','select')
+                        .on('change',onchange)
 
-                chartGroup.append("g")
-                    .attr("class", "axis x")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis);
+        var options = select
+                        .selectAll('option')
+                        .data(['Aboard', 'Ground', 'Total']).enter()
+                        .append('option')
+                        .text(function (d) { return d; });
 
-                chartGroup.append("g")
-                    .attr("class", "axis y")
-                    .call(yAxis);
-            });
+        function onchange() {
+            selectValue = d3.select('select').property('value')
+            draw(selectValue);
+        }
 
-
-
-
-        /*
-        // set the dimensions and margins of the graph
-        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
-            width = 600 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
-
-        // append the svg object to the body of the page
-        var svg = d3.select("#my_dataviz")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-        //Read the data
-        d3.csv("dataset_enhanced.csv", function (d) {
-            return { date: d.Year, value: d.Aboard }
-        },
-            function (d) {
-                var data = {};
-                for (var elem of d) {
-
-                    if (!(elem.date in data)) {
-                        data[elem.date] = 0;
-                    }
-                    if (elem.value) {
-                        data[elem.date] += parseInt(elem.value);
-
-                    }
-                }
-                console.log("CALLED");
-                var x = d3.scale.linear()
-                    .domain([0, d3.max(data, function (d) { return +d.date; })])
-                    .range([0, width]);
-
-                svg.append("g")
-                    .attr("transform", "translate(0," + height - 50 + ")")
-                    .call(d3.svg.axis().orient("bottom").scale(x));
-
-                var y = d3.scale.linear()
-                    .domain([0, d3.max(data, function (d) { return +d.value; })])
-                    .range([height, 0]);
-
-                svg.append("g")
-                    .call(d3.svg.axis().orient("left").scale(y));
-
-                svg.append("path")
-                    .datum(data)
-                    .attr("fill", "none")
-                    .attr("stroke", "steelblue")
-                    .attr("stroke-width", 1.5)
-                    .attr("d", d3.svg.line()
-                        .x(function (d) { return x(d.date) })
-                        .y(function (d) { return y(d.value) })
-                    )
-            });
-            */
+        draw('Aboard')
 
     </script>
 </body>
