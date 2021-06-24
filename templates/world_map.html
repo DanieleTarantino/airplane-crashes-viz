@@ -10,9 +10,11 @@
 
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400italic,600italic,700italic,200,300,400,600,700,900">
+    <link rel="stylesheet" type="text/css" href="https://refreshless.com/nouislider/dist/nouislider.css">
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.0/topojson.min.js"></script>
+    <script src="https://refreshless.com/nouislider/dist/nouislider.js"></script>
     <style>
         .continent {
             fill: #f0e4dd;
@@ -33,10 +35,21 @@
 </head>
 
 <body>
+    <div id="slider"></div>
+    <button type="button">Refresh map</button>
     <input id="menu" type="range" min="1908" max="2009" step="1" value="1908" />
     <div id="container" class="svg-container"></div>
-    <script type="text/javascript">
 
+    <script type="text/javascript">
+        var slider = document.getElementById('slider');
+        noUiSlider.create(slider, {
+            start: [1908, 2009],
+            connect: true,
+            range: {
+                'min': 1908,
+                'max': 2009
+            }
+        });
         var w = 1400;
         var h = 1000;
         var width = w;
@@ -137,6 +150,15 @@
             });
 
             };*/
+
+        var s = document.getElementsByClassName("noUi-handle-lower")[0];
+
+        s.onmousedown = function () {
+            console.log(slider.noUiSlider.get());
+        };
+        // slider.on("change", function (data) {
+        //     console.log(data);
+        // });
 
         d3.select("#menu")
             .on("input", function () {
