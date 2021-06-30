@@ -56,7 +56,7 @@
                     .style("cursor", "pointer")
                     .on("click",
                         function (d) {
-                            window.parent.window.postMessage(d.text, '*')
+                            window.parent.window.postMessage({ message: d.text, sender: "wordcloud" }, '*')
                         })
 
                 //Entering and existing words

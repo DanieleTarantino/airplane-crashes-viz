@@ -31,13 +31,32 @@
             font-size: 11px;
             fill: #3c373d;
         }
+
+        .tooltip {
+            position: absolute;
+            padding: 7px;
+            font-size: 0.9em;
+            pointer-events: none;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 999;
+
+            -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+            -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .tooltip p {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 
 <body>
     <div id="slider"></div>
-    <button type="button">Refresh map</button>
-    <input id="menu" type="range" min="1908" max="2009" step="1" value="1908" />
+    <button type="button" id="refresh">Refresh map</button>
     <div id="container" class="svg-container"></div>
 
     <script type="text/javascript">
@@ -62,6 +81,10 @@
         var projection = d3.geo.mercator().translate([w / 2, h / 2]).scale(200).center([0, 40]);
         var path = d3.geo.path().projection(projection);
 
+        // var tooltip = d3.select("body").append("div")
+        //     .attr("class", "tooltip")
+        //     .attr("opacity", 0);
+
 
 
         d3.json("countries.geojson", function (values) {
@@ -75,14 +98,13 @@
             d3.csv("dataset_enhanced.csv", function (csv) {
                 initialData = csv;
                 drawAllData();
-                drawFilteredData();
+                drawFilteredData(1908, 2009);
             });
         });
 
 
-
         function drawAllData() {
-            svg.selectAll("circle")
+            var alldata = svg.selectAll("circle")
                 .data(initialData)
                 .enter()
                 .append("circle")
@@ -96,14 +118,13 @@
                 .attr("class", "alldata");
         };
 
-        function drawFilteredData() {
+        function drawFilteredData(minYear, maxYear) {
             d3.selectAll(".filtered")
                 .remove();
 
-            var selectedYear = document.getElementById("menu").value;
-            console.log("Drawing year ", selectedYear);
-
-            var filteredData = initialData.filter(function (d) { return d.Year == selectedYear; });
+            var filteredData = initialData.filter(function (d) {
+                return d.Year >= minYear && d.Year <= maxYear;
+            });
 
             var filtered = svg.selectAll(".filtered")
                 .data(filteredData)
@@ -118,25 +139,40 @@
                 .attr("r", 4)
                 .attr("fill", "red")
                 .attr("class", "filtered");
-        }
-        /*
-    openings
-        .on("mouseover", function (d) {
-            tooltip.transition()
-                .duration(250)
-                .style("opacity", 1);
-            tooltip.html(
-                "<p><strong>" + d.city + ", " + d.state + "</strong></p>"
-            )
-                .style("left", (d3.event.pageX + 15) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        })
-        .on("mouseout", function (d) {
-            tooltip.transition()
-                .duration(250)
-                .style("opacity", 0);
-        });
 
+            // filtered
+            //     .on("mouseover", function (d) {
+            //         console.log("Inside handler");
+            //         console.log(d3.mouse)
+            //         console.log(d3.event.pageY)
+            //         // var rect = d.target.getBoundingClientRect();
+            //         console.log(this);
+            //         var xPosition = d3.mouse(this)[0] - 15;
+            //         var yPosition = d3.mouse(this)[1] - 25;
+
+            //         tooltip.transition()
+            //             .duration(250)
+            //             .attr("opacity", 1)
+            //             .attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+
+            //         tooltip.html(
+            //             "<p><strong>" + d.Summary + "</strong></p>"
+            //         )
+            //             .attr("left", (0) + "px")
+            //             .attr("top", (0) + "px");
+            //     })
+            //     .on("mouseout", function (d) {
+            //         tooltip.transition()
+            //             .duration(250)
+            //             .attr("opacity", 0);
+            //     });
+        }
+
+
+
+
+
+        /*
         d3.select(".year").text("Year: " + selectedYear);
 
         var countByYear = d3.nest()
@@ -151,21 +187,18 @@
 
             };*/
 
-        var s = document.getElementsByClassName("noUi-handle-lower")[0];
+        var s = document.getElementById("refresh");
 
-        s.onmousedown = function () {
-            console.log(slider.noUiSlider.get());
+        s.onclick = function () {
+            window.parent.window.postMessage({ message: slider.noUiSlider.get(), sender: "worldmap" }, '*');
         };
-        // slider.on("change", function (data) {
-        //     console.log(data);
-        // });
 
-        d3.select("#menu")
-            .on("input", function () {
-                drawFilteredData();
-            });
+        window.addEventListener("message", (event) => {
+            let [min, max] = event.data;
+            drawFilteredData(Math.floor(min), Math.floor(max));
+        }, false);
 
-//d3.select(self.frameElement).style("height", "675px");
+        // d3.select(self.frameElement).style("height", "675px");
 
 
     </script>

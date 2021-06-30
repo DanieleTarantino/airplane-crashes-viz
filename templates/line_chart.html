@@ -56,14 +56,19 @@
         var xNudge = 50;
         var yNudge = -50;
 
-        function draw(select) {
+        var minYear = 1908;
+        var maxYear = 2009;
+
+        var CSV = d3.csv("/dataset_enhanced.csv");
+
+        function draw(select, minY, maxY) {
 
             d3.select("#line_chart").remove()
             d3.select("body").append("div").attr('id', 'line_chart')
-            d3.csv("/dataset_enhanced.csv")
-                .row(function (d) { 
-                            return { date: d.Year, value: [d.Aboard, d.Ground] }; 
-                        })
+            CSV
+                .row(function (d) {
+                    return { date: d.Year, value: [d.Aboard, d.Ground] };
+                })
                 .get(function (error, data) {
 
                     var d = {};
@@ -98,7 +103,9 @@
                     }
                     data = w;
 
-                    console.log(data)
+                    data = data.filter(function (d) {
+                        return parseInt(d.date) <= maxY && parseInt(d.date) >= minY;
+                    });
 
                     max = d3.max(data, function (d) { return d.value; });
                     minDate = d3.min(data, function (d) { return d.date; });
@@ -144,22 +151,31 @@
         }
 
         var select = d3.select('#select_plot')
-                        .append('select')
-                        .attr('class','select')
-                        .on('change',onchange)
+            .append('select')
+            .attr('class', 'select')
+            .on('change', onchange)
 
         var options = select
-                        .selectAll('option')
-                        .data(['Aboard', 'Ground', 'Total']).enter()
-                        .append('option')
-                        .text(function (d) { return d; });
+            .selectAll('option')
+            .data(['Aboard', 'Ground', 'Total']).enter()
+            .append('option')
+            .text(function (d) { return d; });
 
         function onchange() {
-            selectValue = d3.select('select').property('value')
-            draw(selectValue);
+            let selectValue = d3.select('select').property('value')
+            draw(selectValue, minYear, maxYear);
         }
 
-        draw('Aboard')
+        draw('Aboard', 1908, 2009)
+
+        window.addEventListener("message", (event) => {
+            [minYear, maxYear] = event.data;
+            minYear = Math.floor(minYear);
+            maxYear = Math.floor(maxYear);
+            let selectValue = d3.select('select').property('value')
+            console.log(minYear, maxYear)
+            draw(selectValue, minYear, maxYear);
+        }, false);
 
     </script>
 </body>
