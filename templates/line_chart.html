@@ -67,7 +67,7 @@
             d3.select("body").append("div").attr('id', 'line_chart')
             CSV
                 .row(function (d) {
-                    return { date: d.Year, value: [d.Aboard, d.Ground] };
+                    return { date: d.Year.toString(), value: [d.Aboard, d.Ground] };
                 })
                 .get(function (error, data) {
 
@@ -125,7 +125,7 @@
 
                     var xAxis = d3.svg.axis()
                         .orient("bottom")
-                        .scale(x);
+                        .scale(x).tickFormat(d3.format("d"));
 
                     var line = d3.svg.line()
                         .x(function (d) { return x(d.date); })
