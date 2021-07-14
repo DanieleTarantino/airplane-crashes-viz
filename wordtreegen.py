@@ -8,6 +8,7 @@ import json
 
 from string import punctuation, digits
 
+
 def visit(out, edges):
 
     if out["name"] not in edges:

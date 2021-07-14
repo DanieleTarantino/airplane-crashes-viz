@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+        }
+
+        .bar {
+            fill: #5f89ad;
+        }
+
+        .axis {
+            font-size: 13px;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            display: none;
+        }
+
+        .label {
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="graph"></div>
+
+    <script type="text/javascript">
+        var data;
+        var height;
+        d3.json("filters.json", function (x) {
+            data = x["data"]
+            height = data.length * (20 - 0.3);
+            draw()
+        })
+
+        function draw() {
+
+            var margin = {
+                top: 850,
+                right: 25,
+                bottom: 15,
+                left: 180
+            }
+        
+            var width = 400 - margin.left - margin.right;
+
+            var svg = d3.select("#graph")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height)
+                .append("g")
+                .attr("transform",
+                    "translate(" + margin.left + ",-" + margin.top + ")");
+
+            var x = d3.scale.linear()
+                .range([0, width])
+                .domain([0, d3.max(data, function (d) {
+                    return d.Crashes;
+                })]);
+
+            var y = d3.scale.ordinal()
+                .rangeRoundBands([height, 0], .3)
+                .domain(data.map(function (d) {
+                    return d.Company;
+                }));
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                //no tick marks
+                .tickSize(0)
+                .orient("left");
+
+
+            var gy = svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+
+            var bars = svg.selectAll(".bar")
+                .data(data)
+                .enter()
+                .append("g")  //append rects
+
+            bars.append("rect")
+                .attr("class", "bar")
+                .attr("y", function (d) {
+                    return y(d.Company);
+                })
+                .attr("height", y.rangeBand())
+                .attr("x", 0)
+                .attr("width", function (d) {
+                    return x(d.Crashes);
+                });
+
+            bars.append("text")
+                .attr("class", "label")
+                //y position of the label is halfway down the bar
+                .attr("y", function (d) {
+                    return y(d.Company) + y.rangeBand() / 2 + 4;
+                })
+                //x position is 3 pixels to the right of the bar
+                .attr("x", function (d) {
+                    return x(d.Crashes) + 3;
+                })
+                .text(function (d) {
+                    return d.Crashes;
+                });
+
+        }
+    </script>
+
+</body>
+
+</html>

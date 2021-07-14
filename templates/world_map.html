@@ -55,8 +55,8 @@
 </head>
 
 <body>
-    <div id="slider"></div>
-    <button type="button" id="refresh">Refresh map</button>
+    <div id="slider" style="margin:10px;"></div>
+    <button type="button" id="refresh" style="margin:10px;">Refresh map</button>
     <div id="container" class="svg-container"></div>
 
     <script type="text/javascript">
@@ -94,7 +94,6 @@
 
             d3.csv("dataset_enhanced.csv", function (csv) {
                 initialData = csv;
-                // drawAllData();
 
                 drawFilteredData(1908, 2009);
             });
@@ -116,26 +115,28 @@
                 .attr("class", "alldata");
         };
 
-        var zoom = d3.behavior.zoom()
-            .translate([0, 0])
-            .scale(1)
-            .scaleExtent([1, 3])
-            .on("zoom", zoomed);
-
-        svg
-            .call(zoom) // delete this line to disable free zooming
-            .call(zoom.event);
-
-        function zoomed() {
-            svg.style("stroke-width", 1.5 / d3.event.scale + "px").style("font-size", 12 / d3.event.scale + "px");
-            svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-            d3.selectAll(".filtered").attr("r", 4 / d3.event.scale);
-
-
-        }
-        // function zoomed({ transform }) {
-        //     g.attr("transform", transform);
-        // }
+        /*
+                var zoom = d3.behavior.zoom()
+                    .translate([0, 0])
+                    .scale(1)
+                    .scaleExtent([1, 3])
+                    .on("zoom", zoomed);
+        
+                svg
+                    .call(zoom) // delete this line to disable free zooming
+                    .call(zoom.event);
+        
+                function zoomed() {
+                    svg.style("stroke-width", 1.5 / d3.event.scale + "px").style("font-size", 12 / d3.event.scale + "px");
+                    svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                    d3.selectAll(".filtered").attr("r", 4 / d3.event.scale);
+        
+        
+                }
+                function zoomed({ transform }) {
+                    g.attr("transform", transform);
+                }
+        */
 
         function drawFilteredData(minYear, maxYear) {
             d3.selectAll(".filtered")

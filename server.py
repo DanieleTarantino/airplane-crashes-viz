@@ -4,6 +4,7 @@ from flask.wrappers import Request
 import wordcloudgen
 import wordtreegen
 import histogramgen
+import operatorfiltergen
 import nltk
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -44,11 +45,20 @@ def get_histogram():
     return jsonify(js)
 
 
+@app.route("/filters.json")
+def filters():
+    fil = operatorfiltergen.get_operators_as_json()
+    print(fil["data"])
+    return fil
+    return {"data": [{"a": 1, "b": 2, "c": 2}, {"a": 1, "b": 2, "c": 2}]}
+    return jsonify(fil)
+
 # @app.route("/line_chart")
 # def line_chart():
 #     return send_file("dataset_enhanced.csv")
 #     # return jsonify({1900: [10, 42], 2000: [42, 442]})
 #     # return "<script>alert(1)</script>"
+
 
 """
 ===============================================================================
@@ -60,6 +70,11 @@ Methods used to render visualization pages inside iframes
 @app.route("/world_map")
 def world_map():
     return render_template("world_map.html")
+
+
+@app.route("/company_filter")
+def company_filter():
+    return render_template("company_filter.html")
 
 
 @ app.route("/word_tree")
