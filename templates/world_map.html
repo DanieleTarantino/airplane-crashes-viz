@@ -11,9 +11,10 @@
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400italic,600italic,700italic,200,300,400,600,700,900">
     <link rel="stylesheet" type="text/css" href="https://refreshless.com/nouislider/dist/nouislider.css">
-    <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.0/topojson.min.js"></script>
+    <!-- <script src="https://refreshless.com/nouislider/dist/nouislider.js"></script> -->
     <script src="{{ url_for('static', filename='js/nouislider.js') }}"></script>
     <style>
         .continent {
@@ -31,6 +32,26 @@
             font-size: 11px;
             fill: #3c373d;
         }
+
+        /* .tooltip {
+            position: absolute;
+            padding: 7px;
+            font-size: 0.9em;
+            pointer-events: none;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 999;
+
+            -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+            -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .tooltip p {
+            margin: 0;
+            padding: 0;
+        } */
     </style>
 </head>
 
@@ -143,8 +164,8 @@
                 .attr("x", 15)
                 .attr("dy", "1.2em")
                 .style("text-anchor", "middle")
-                .attr("font-size", "24px")
-
+                .attr("font-size", "12px")
+                .attr("font-weight", "bold");
             filtered
                 .on("mouseover", function (d) {
                     var xPosition = d3.mouse(this)[0] - 15;
@@ -154,6 +175,50 @@
                 })
                 .on("mouseout", function () { tooltip.style("display", "none"); })
                 ;
+            // .on("mouseover", function (d) {
+            //     // var rect = d.target.getBoundingClientRect();
+            //     console.log(this);
+            //     var xPosition = this.cx - 15;
+            //     var yPosition = this.cy - 25;
+
+            //     tooltip.transition()
+            //         .duration(250)
+            //         .attr("opacity", 1)
+            //         .attr("transform", "translate(" + d3.event.translate + ")");
+
+            //     tooltip.html(
+            //         "<p><strong>" + d.Summary + "</strong></p>"
+            //     )
+            //         .attr("left", (0) + "px")
+            //         .attr("top", (0) + "px");
+            // })
+            // .on("mouseout", function (d) {
+            //     tooltip.transition()
+            //         .duration(250)
+            //         .attr("opacity", 0);
+            // });
+        }
+
+
+
+
+
+        /*
+        d3.select(".year").text("Year: " + selectedYear);
+ 
+        var countByYear = d3.nest()
+            .key(function (d) { return d.year; })
+            .rollup(function (values) { return values.length; })
+            .entries(filteredData);
+ 
+        d3.select(".count")
+            .text(function (d, i) {
+                return "New Stores: " + countByYear[i].values
+            });
+ 
+            };*/
+
+
         var s = document.getElementById("refresh");
         document.body.addEventListener("sliderchange", function (e) {
             console.log(e.detail)
@@ -164,9 +229,12 @@
             s.value = "Show interval " + miny + " to " + maxy
         })
 
+
         s.onclick = function () {
             window.parent.window.postMessage({ message: slider.noUiSlider.get(), sender: "worldmap" }, '*');
         };
+
+        // s.value = "Show interval 1908 to 2009"
 
         window.addEventListener("message", (event) => {
             if (event.data.sender == "worldmap") {
