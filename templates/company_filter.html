@@ -63,7 +63,7 @@
             for (var key in initialData) {
                 var tmp = {};
                 tmp.Company = initialData[key]['Company']
-                
+
                 var a = -1, b = -1;
                 for (var i = 0; i < initialData[key]['Crashes'].length; i++) {
                     if ((initialData[key]['Crashes'][i][0] >= minYear) && (a == -1))
@@ -72,7 +72,7 @@
                         b = i
                 }
 
-                if (a > b) 
+                if (a > b)
                     continue
 
                 if (a == -1)
@@ -81,6 +81,8 @@
                 var low, high;
                 if (a == 0)
                     low = 0;
+                else if (a == b)
+                    low = initialData[key]['Crashes'][a - 1][1];
                 else
                     low = initialData[key]['Crashes'][a][1];
 
@@ -92,7 +94,7 @@
                 tmp.Crashes = high - low;
                 data.push(tmp);
             }
-            
+
             data.sort((a, b) => (a.Crashes > b.Crashes) ? -1 : 1)
             others = data.slice(limit);
             data = data.slice(0, limit);

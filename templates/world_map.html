@@ -100,8 +100,9 @@
             d3.selectAll(".filtered")
                 .remove();
 
+            console.log(minYear, maxYear)
             var filteredData = initialData.filter(function (d) {
-                if (d.Year < minYear || d.Year > maxYear) {
+                if ((d.Year < minYear) || (d.Year > maxYear)) {
                     return false
                 }
                 if (filters[d.Operator]) {
@@ -171,6 +172,8 @@
         window.addEventListener("message", (event) => {
             if (event.data.sender == "worldmap") {
                 [minYear, maxYear] = event.data.data;
+                minYear = parseInt(minYear)
+                maxYear = parseInt(maxYear)
                 drawFilteredData();
             }
             else if (event.data.sender == "company_filter") {
