@@ -67,7 +67,7 @@
             d3.select("body").append("div").attr('id', 'line_chart')
             CSV
                 .row(function (d) {
-                    return { date: d.Year.toString(), value: [d.Aboard, d.Ground] };
+                    return { date: d.Year.toString(), value: [d.Fatalities, d.Ground] };
                 })
                 .get(function (error, data) {
 
