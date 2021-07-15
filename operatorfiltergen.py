@@ -8,34 +8,40 @@ def get_operators_as_json():
     results = {}
 
     ds = pd.read_csv("dataset_enhanced.csv", usecols=(
-        "Operator", "Aboard", "Fatalities", "Ground"))
+        "Operator", "Year", "Ground"))
     df = pd.DataFrame(ds).fillna(0)
 
+    tot = 0
     for index, row in df.iterrows():
         op = str(row["Operator"])
+        y = str(row['Year'])
         if op == None:
             continue
 
-        a = float(row["Aboard"])
-        f = float(row["Fatalities"])
-        g = float(row["Ground"])
-
         if op not in results:
-            results[op] = {"Crashes": 0}
-        # results[op]["Aboard"] += a
-        # results[op]["Fatalities"] += f
-        # results[op]["Ground"] += g
-        results[op]["Crashes"] += 1
+            results[op] = {"Crashes": {}}
+        if y not in results[op]['Crashes']:
+            results[op]['Crashes'][y] = 0
+        results[op]["Crashes"][y] += 1
+        tot += 1
 
     ret = {"data": []}
 
-    for key, value in results.items():
-        ret["data"].append({"Company": key, "Crashes": value["Crashes"]})
+    for comp in results:
+        sorted_years = []
+        for year in results[comp]['Crashes']:
+            sorted_years.append(year)
+        sorted_years = sorted(sorted_years)
 
-    tmp = sorted(ret["data"], key=lambda x: x["Crashes"])
-    ret["data"] = tmp[-20:]
-    ret["data"].append({"Company": "Other", "Crashes": sum(
-        map(lambda x: x["Crashes"], tmp[:-20]))})
+        first = [sorted_years[0], results[comp]['Crashes'][sorted_years[0]]]
+        obj = {'Company': comp, 'Crashes': [first]}
+        for i, y in enumerate(sorted_years[1:]):
+            obj['Crashes'].append([y, results[comp]['Crashes'][y] + obj['Crashes'][-1][1]])
+        
+        ret['data'].append(obj)
+
+    ret['data'] = sorted(ret['data'], key=lambda x: x['Crashes'][-1][1])
+
     return ret
 
 

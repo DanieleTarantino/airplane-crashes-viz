@@ -34,12 +34,15 @@
 </head>
 
 <body>
-    <div id="graph"></div>
-
     <script type="text/javascript">
-        var data;
+        var initialData;
         var height;
         var filter_dict = {};
+
+        var minYear = 1908;
+        var maxYear = 2009;
+
+        var limit = 20;
 
         function selectColor(colorNum, colors) {
             if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
@@ -47,18 +50,67 @@
         }
 
         d3.json("filters.json", function (x) {
-            data = x["data"]
-
-            data.forEach((element, i) => {
-                filter_dict[element.Company] = { filtered: false, color: selectColor(i, 21) }
-            });
-            window.parent.window.postMessage({ message: filter_dict, sender: "company_filter" }, '*')
-
+            initialData = x["data"]
             draw()
         })
 
         function draw() {
-            console.log(data)
+            d3.select("#graph").remove()
+
+            // filter and modify data
+            var data = []
+
+            for (var key in initialData) {
+                var tmp = {};
+                tmp.Company = initialData[key]['Company']
+                
+                var a = -1, b = -1;
+                for (var i = 0; i < initialData[key]['Crashes'].length; i++) {
+                    if ((initialData[key]['Crashes'][i][0] >= minYear) && (a == -1))
+                        a = i
+                    if ((initialData[key]['Crashes'][i][0] <= maxYear))
+                        b = i
+                }
+
+                if (a == -1)
+                    continue;
+
+                var low, high;
+                if (a == 0)
+                    low = 0;
+                else
+                    low = initialData[key]['Crashes'][a][1];
+
+                if (b == -1)
+                    high = 2 * low;
+                else
+                    high = initialData[key]['Crashes'][b][1];
+
+                tmp.Crashes = high - low;
+                data.push(tmp);
+            }
+            
+            data.sort((a, b) => (a.Crashes > b.Crashes) ? -1 : 1)
+            others = data.slice(limit);
+            data = data.slice(0, limit);
+
+            tmp = {};
+            tmp.Company = 'Other';
+            console.log(others)
+
+            let sum_others = 0;
+            for (var i = 0; i < others.length; i++)
+                sum_others += others[i].Crashes;
+            tmp.Crashes = sum_others;
+
+            data.push(tmp);
+            data = data.filter(a => a.Crashes != 0);
+            data.sort((a, b) => (a.Crashes > b.Crashes) ? 1 : -1)
+
+            data.forEach((element, i) => {
+                filter_dict[element.Company] = { filtered: false, color: selectColor(i, limit + 1) }
+            });
+            window.parent.window.postMessage({ message: filter_dict, sender: "company_filter" }, '*')
 
             var margin = {
                 top: 0,
@@ -70,10 +122,11 @@
             var width = 400 - margin.left - margin.right;
             var height = 800 - margin.top - margin.bottom;
 
-            var svg = d3.select("#graph")
+            var svg = d3.select("body")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height)
+                .attr("id", "graph")
                 .append("g")
                 .attr("transform",
                     "translate(" + margin.left + ",-" + margin.top + ")");
@@ -145,14 +198,19 @@
                         if (tmp[i].innerHTML == d && filter_dict[d]["filtered"] == false) {
                             tmp[i].style["text-decoration"] = "none"
                         }
-
-                        console.log(tmp[i].innerHTML)
                     }
                     window.parent.window.postMessage({ message: filter_dict, sender: "company_filter" }, '*')
                 });
-
-
         }
+
+        window.addEventListener("message", (event) => {
+            if (event.data.sender == "worldmap") {
+                [minYear, maxYear] = event.data.data;
+                minYear = Math.floor(minYear);
+                maxYear = Math.floor(maxYear);
+                draw();
+            }
+        }, false);
     </script>
 
 </body>
