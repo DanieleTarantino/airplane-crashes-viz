@@ -75,6 +75,8 @@
         var height = h;
         var initialData;
         var filters = {}
+        var minYear = 1908
+        var maxYear = 2009
 
         var svg = d3.select("div#container").append("svg").attr("preserveAspectRatio", "xMinYMin meet").style("background-color", "#c9e8fd")
             .attr("viewBox", "0 0 " + w + " " + h)
@@ -114,7 +116,7 @@
                 .attr("class", "alldata");
         };
 
-        function drawFilteredData(minYear, maxYear) {
+        function drawFilteredData() {
             d3.selectAll(".filtered")
                 .remove();
 
@@ -127,7 +129,6 @@
                 }
 
                 return !filters["Other"]["filtered"]
-                // return false
             });
             var filtered = svg.selectAll(".filtered")
                 .data(filteredData)
@@ -224,8 +225,8 @@
 
         window.addEventListener("message", (event) => {
             if (event.data.sender == "worldmap") {
-                let [min, max] = event.data.data;
-                drawFilteredData(Math.floor(min), Math.floor(max));
+                [minYear, maxYear] = event.data.data;
+                drawFilteredData();
             }
             else if (event.data.sender == "company_filter") {
 
@@ -241,7 +242,7 @@
                 }
 
                 waitFor('initialData', function () {
-                    drawFilteredData(1908, 2009);
+                    drawFilteredData();
                 });
 
             }
