@@ -48,7 +48,6 @@
 
         d3.json("filters.json", function (x) {
             data = x["data"]
-            height = data.length * (20 - 0.3);
 
             data.forEach((element, i) => {
                 filter_dict[element.Company] = { filtered: false, color: selectColor(i, 21) }
@@ -69,6 +68,7 @@
             }
 
             var width = 400 - margin.left - margin.right;
+            var height = 800 - margin.top - margin.bottom;
 
             var svg = d3.select("#graph")
                 .append("svg")
