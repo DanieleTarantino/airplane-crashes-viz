@@ -162,7 +162,7 @@
         }
 
         window.addEventListener("message", (event) => {
-            let word = event.data;
+            let word = event.data.data;
             console.log(word);
             var w = $.ajax({
                 url: "wt_data", data: { "starting_word": word }, async: false, success: function (x) {

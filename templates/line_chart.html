@@ -168,12 +168,14 @@
         draw('Aboard', 1908, 2009)
 
         window.addEventListener("message", (event) => {
-            [minYear, maxYear] = event.data;
-            minYear = Math.floor(minYear);
-            maxYear = Math.floor(maxYear);
-            let selectValue = d3.select('select').property('value')
-            console.log(minYear, maxYear)
-            draw(selectValue, minYear, maxYear);
+            if (event.data.sender == "worldmap") {
+                [minYear, maxYear] = event.data.data;
+                minYear = Math.floor(minYear);
+                maxYear = Math.floor(maxYear);
+                let selectValue = d3.select('select').property('value')
+                console.log(minYear, maxYear)
+                draw(selectValue, minYear, maxYear);
+            }
         }, false);
 
     </script>

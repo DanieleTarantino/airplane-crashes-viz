@@ -192,10 +192,12 @@
         }
 
         window.addEventListener("message", (event) => {
-            [minYear, maxYear] = event.data;
-            minYear = Math.floor(minYear);
-            maxYear = Math.floor(maxYear);
-            draw(minYear, maxYear);
+            if (event.data.sender == "worldmap") {
+                [minYear, maxYear] = event.data.data;
+                minYear = Math.floor(minYear);
+                maxYear = Math.floor(maxYear);
+                draw(minYear, maxYear);
+            }
         }, false);
 
     </script>

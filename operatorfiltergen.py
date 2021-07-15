@@ -32,11 +32,12 @@ def get_operators_as_json():
     for key, value in results.items():
         ret["data"].append({"Company": key, "Crashes": value["Crashes"]})
 
-    ret["data"] = sorted(ret["data"], key=lambda x: x["Crashes"])
-    print(len(ret["data"]))
+    tmp = sorted(ret["data"], key=lambda x: x["Crashes"])
+    ret["data"] = tmp[-20:]
+    ret["data"].append({"Company": "Other", "Crashes": sum(
+        map(lambda x: x["Crashes"], tmp[:-20]))})
     return ret
 
 
 if __name__ == "__main__":
     a = get_operators_as_json()
-    print(a)

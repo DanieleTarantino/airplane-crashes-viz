@@ -39,21 +39,35 @@
     <script type="text/javascript">
         var data;
         var height;
+        var filter_dict = {};
+
+        function selectColor(colorNum, colors) {
+            if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
+            return "hsl(" + (colorNum * (360 / colors) % 360) + ",100%,50%)";
+        }
+
         d3.json("filters.json", function (x) {
             data = x["data"]
             height = data.length * (20 - 0.3);
+
+            data.forEach((element, i) => {
+                filter_dict[element.Company] = { filtered: false, color: selectColor(i, 21) }
+            });
+            window.parent.window.postMessage({ message: filter_dict, sender: "company_filter" }, '*')
+
             draw()
         })
 
         function draw() {
+            console.log(data)
 
             var margin = {
-                top: 850,
-                right: 25,
+                top: 0,
+                right: 35,
                 bottom: 15,
                 left: 180
             }
-        
+
             var width = 400 - margin.left - margin.right;
 
             var svg = d3.select("#graph")
@@ -81,7 +95,6 @@
                 .tickSize(0)
                 .orient("left");
 
-
             var gy = svg.append("g")
                 .attr("class", "y axis")
                 .call(yAxis)
@@ -98,12 +111,16 @@
                 })
                 .attr("height", y.rangeBand())
                 .attr("x", 0)
+                .style("fill", function (d) {
+                    return filter_dict[d.Company]["color"]
+                })
                 .attr("width", function (d) {
                     return x(d.Crashes);
                 });
 
             bars.append("text")
                 .attr("class", "label")
+
                 //y position of the label is halfway down the bar
                 .attr("y", function (d) {
                     return y(d.Company) + y.rangeBand() / 2 + 4;
@@ -114,7 +131,26 @@
                 })
                 .text(function (d) {
                     return d.Crashes;
+                })
+
+            svg.selectAll(".y.axis .tick")
+                .on("click", function (d) {
+                    filter_dict[d]["filtered"] = !filter_dict[d]["filtered"]
+
+                    var tmp = document.getElementsByTagName("text");
+                    for (var i = 0; i < tmp.length; i++) {
+                        if (tmp[i].innerHTML == d && filter_dict[d]["filtered"] == true) {
+                            tmp[i].style["text-decoration"] = "line-through"
+                        }
+                        if (tmp[i].innerHTML == d && filter_dict[d]["filtered"] == false) {
+                            tmp[i].style["text-decoration"] = "none"
+                        }
+
+                        console.log(tmp[i].innerHTML)
+                    }
+                    window.parent.window.postMessage({ message: filter_dict, sender: "company_filter" }, '*')
                 });
+
 
         }
     </script>

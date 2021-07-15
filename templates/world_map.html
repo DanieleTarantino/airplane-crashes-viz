@@ -74,6 +74,7 @@
         var width = w;
         var height = h;
         var initialData;
+        var filters = {}
 
         var svg = d3.select("div#container").append("svg").attr("preserveAspectRatio", "xMinYMin meet").style("background-color", "#c9e8fd")
             .attr("viewBox", "0 0 " + w + " " + h)
@@ -94,8 +95,6 @@
 
             d3.csv("dataset_enhanced.csv", function (csv) {
                 initialData = csv;
-
-                drawFilteredData(1908, 2009);
             });
         });
 
@@ -115,37 +114,21 @@
                 .attr("class", "alldata");
         };
 
-        /*
-                var zoom = d3.behavior.zoom()
-                    .translate([0, 0])
-                    .scale(1)
-                    .scaleExtent([1, 3])
-                    .on("zoom", zoomed);
-        
-                svg
-                    .call(zoom) // delete this line to disable free zooming
-                    .call(zoom.event);
-        
-                function zoomed() {
-                    svg.style("stroke-width", 1.5 / d3.event.scale + "px").style("font-size", 12 / d3.event.scale + "px");
-                    svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-                    d3.selectAll(".filtered").attr("r", 4 / d3.event.scale);
-        
-        
-                }
-                function zoomed({ transform }) {
-                    g.attr("transform", transform);
-                }
-        */
-
         function drawFilteredData(minYear, maxYear) {
             d3.selectAll(".filtered")
                 .remove();
 
             var filteredData = initialData.filter(function (d) {
-                return d.Year >= minYear && d.Year <= maxYear;
-            });
+                if (d.Year < minYear || d.Year > maxYear) {
+                    return false
+                }
+                if (filters[d.Operator]) {
+                    return !filters[d.Operator]["filtered"]
+                }
 
+                return !filters["Other"]["filtered"]
+                // return false
+            });
             var filtered = svg.selectAll(".filtered")
                 .data(filteredData)
                 .enter()
@@ -157,7 +140,12 @@
                     return projection([d.Lon, d.Lat])[1];
                 })
                 .attr("r", 4)
-                .attr("fill", "red")
+                .style("fill", function (d) {
+                    if (!filters[d.Operator]) {
+                        return filters["Other"]["color"]
+                    }
+                    return filters[d.Operator]["color"]
+                })
                 .attr("class", "filtered");
 
             tooltip = svg.append("g")
@@ -235,12 +223,29 @@
         };
 
         window.addEventListener("message", (event) => {
-            let [min, max] = event.data;
-            drawFilteredData(Math.floor(min), Math.floor(max));
+            if (event.data.sender == "worldmap") {
+                let [min, max] = event.data.data;
+                drawFilteredData(Math.floor(min), Math.floor(max));
+            }
+            else if (event.data.sender == "company_filter") {
+
+                filters = event.data.data
+
+                function waitFor(variable, callback) {
+                    var interval = setInterval(function () {
+                        if (window[variable]) {
+                            clearInterval(interval);
+                            callback();
+                        }
+                    }, 200);
+                }
+
+                waitFor('initialData', function () {
+                    drawFilteredData(1908, 2009);
+                });
+
+            }
         }, false);
-
-        // d3.select(self.frameElement).style("height", "675px");
-
 
     </script>
 
