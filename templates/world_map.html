@@ -22,6 +22,10 @@
             stroke-width: 0.5;
         }
 
+        body {
+            background-color: #133B5C;
+        }
+
         .circles {
             fill: #3c373d;
         }
@@ -31,12 +35,36 @@
             font-size: 11px;
             fill: #3c373d;
         }
+
+        .noUi-connect {
+            background-color: #1E5F74;
+            border-color: #1E5F74;
+        }
+
+        .noUi-base {
+            background-color: #FCDAB7;
+            border-color: #1E5F74;
+        }
+
+        .noUi-horizontal .noUi-handle,
+        .noUi-vertical .noUi-handle {
+            background-color: #1E5F74;
+            border-color: #1E5F74;
+        }
+
+        .noUi-target.noUi-horizontal .noUi-tooltip {
+            background-color: #1E5F74;
+            border-color: #1E5F74;
+            box-shadow: none;
+        }
     </style>
 </head>
 
 <body>
     <div id="slider" style="margin:10px;"></div>
-    <input type="button" id="refresh" style="margin:10px;" value="Show interval 1908 to 2009">
+    <input type="button" id="refresh"
+        style="margin:10px; background-color: #1E5F74; color: #FCDAB7; border-color: #1D2D50;"
+        value="Show interval 1908 to 2009">
     <div id="container" class="svg-container"></div>
 
     <script type="text/javascript">
@@ -174,7 +202,7 @@
                 [minYear, maxYear] = event.data.data;
                 minYear = parseInt(minYear)
                 maxYear = parseInt(maxYear)
-                drawFilteredData();
+                // drawFilteredData();
             }
             else if (event.data.sender == "company_filter") {
 

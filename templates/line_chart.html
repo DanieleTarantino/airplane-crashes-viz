@@ -24,7 +24,7 @@
 
         path.line {
             fill: none;
-            stroke: #a8ddb5;
+            stroke: #43a2ca;
             stroke-width: 3px;
         }
 
@@ -34,13 +34,31 @@
             stroke: slategray;
             shape-rendering: crispEdges;
         }
+
+        body {
+            background-color: #133B5C;
+        }
+
+        .y.axis {
+            fill: #FCDAB7;
+        }
+
+        .x.axis {
+            fill: #FCDAB7;
+        }
+
+        select {
+            background: #1E5F74;
+            color: #FCDAB7;
+            border-color: #1D2D50;
+        }
     </style>
 </head>
 
 
 <body>
 
-    <div id="select_plot"></div>
+    <div id="select_plot" style="margin-bottom:10px"></div>
     <script>
 
         var parseDate = d3.time.format("%Y").parse;
@@ -152,6 +170,8 @@
         var select = d3.select('#select_plot')
             .append('select')
             .attr('class', 'select')
+            .attr('class', "form-select")
+            .attr("background-color", "#1E5F74")
             .on('change', onchange)
 
         var options = select

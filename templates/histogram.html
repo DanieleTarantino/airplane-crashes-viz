@@ -13,6 +13,10 @@
             shape-rendering: crispEdges;
         }
 
+        body {
+            background-color: #133B5C;
+        }
+
         .axis path,
         .axis line {
             fill: none;
@@ -32,6 +36,14 @@
             fill: none;
             stroke: slategray;
             shape-rendering: crispEdges;
+        }
+
+        .y.axis {
+            fill: #FCDAB7;
+        }
+
+        .x.axis {
+            fill: #FCDAB7;
         }
     </style>
 
@@ -87,8 +99,8 @@
             })
             c1.attr("cx", 50).attr("cy", 15).attr("r", 6).style("fill", colors[0])
             c2.attr("cx", 50).attr("cy", 35).attr("r", 6).style("fill", colors[1])
-            var t1 = svg.append("text").attr("x", 70).attr("y", 19).text("Day").style("font-size", "12px").attr("alignment-baseline", "middle")
-            var t2 = svg.append("text").attr("x", 70).attr("y", 39).text("Night").style("font-size", "12px").attr("alignment-baseline", "middle")
+            var t1 = svg.append("text").attr("x", 70).attr("y", 19).text("Day").style("font-size", "12px").attr("alignment-baseline", "middle").style("fill", "#FCDAB7")
+            var t2 = svg.append("text").attr("x", 70).attr("y", 39).text("Night").style("font-size", "12px").attr("alignment-baseline", "middle").style("fill", "#FCDAB7")
 
             if ((filter_time & 1) == 0)
                 t1.attr("text-decoration", "line-through")
@@ -142,6 +154,7 @@
 
             svg.append("g")
                 .attr("class", "y axis")
+                .attr("transform", "translate(-5, 0)")
                 .call(yAxis);
 
             svg.append("g")

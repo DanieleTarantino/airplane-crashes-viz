@@ -18,6 +18,10 @@
             display: flex;
             justify-content: center;
         }
+
+        body {
+            background-color: #133B5C;
+        }
     </style>
 
 </head>
@@ -30,7 +34,7 @@
         function wordCloud(selector) {
 
             // CHANGE THIS TO CHANGE COLOR SCALE
-            var fill = d3.scale.linear().domain([1, 25]).range(["grey", "black"]);
+            var fill = d3.scale.linear().domain([1, 25]).range(["#FCDAB7", "#1E5F74"]);
 
             var svg = d3.select(selector).append("svg")
                 .attr("width", "500px")

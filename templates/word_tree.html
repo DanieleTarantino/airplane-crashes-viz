@@ -11,6 +11,11 @@
     <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
 
     <style>
+        body {
+            background-color: #133B5C;
+        }
+
+
         .node circle {
             cursor: pointer;
             fill: #fff;
@@ -19,7 +24,8 @@
         }
 
         .node text {
-            font-size: 11px;
+            font-size: 12px;
+            color: #FCDAB7;
         }
 
         path.link {
@@ -88,7 +94,8 @@
                 .attr("text-anchor", function (d) { return d.children || d._children ? "end" : "start"; })
                 .attr("font-family", "monospace")
                 .text(function (d) { return d.name; })
-                .style("fill-opacity", 1e-6);
+                .style("fill-opacity", 1e-6)
+                .style("fill", "#FCDAB7");
 
             // Transition nodes to their new position.
             var nodeUpdate = node.transition()
