@@ -37,6 +37,8 @@
 
         .y.axis {
             fill: #FCDAB7;
+            font-family: monospace;
+            font-size: 9pt;
         }
 
         .label {
@@ -57,7 +59,7 @@
         var limit = 20;
 
         function selectColor(colorNum, colors) {
-            if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
+            if (colors < 1) colors = 1;
             return "hsl(" + (colorNum * (360 / colors) % 360) + ",100%,50%)";
         }
 
@@ -74,7 +76,12 @@
 
             for (var key in initialData) {
                 var tmp = {};
-                tmp.Company = initialData[key]['Company']
+                if (initialData[key]["Company"].length > 24) {
+                    tmp.Company = initialData[key]['Company'].substring(0, 21) + "...";
+                }
+                else {
+                    tmp.Company = initialData[key]['Company'];
+                }
 
                 var a = -1, b = -1;
                 for (var i = 0; i < initialData[key]['Crashes'].length; i++) {
@@ -160,7 +167,6 @@
                 }));
             var yAxis = d3.svg.axis()
                 .scale(y)
-                //no tick marks
                 .tickSize(0)
                 .orient("left");
 
@@ -171,7 +177,7 @@
             var bars = svg.selectAll(".bar")
                 .data(data)
                 .enter()
-                .append("g")  //append rects
+                .append("g")
 
             bars.append("rect")
                 .attr("class", "bar")
@@ -189,12 +195,9 @@
 
             bars.append("text")
                 .attr("class", "label")
-
-                //y position of the label is halfway down the bar
                 .attr("y", function (d) {
                     return y(d.Company) + y.rangeBand() / 2 + 4;
                 })
-                //x position is 3 pixels to the right of the bar
                 .attr("x", function (d) {
                     return x(d.Crashes) + 3;
                 })

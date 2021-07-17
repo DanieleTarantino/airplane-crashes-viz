@@ -48,7 +48,6 @@ def get_histogram():
 @app.route("/filters.json")
 def filters():
     fil = operatorfiltergen.get_operators_as_json()
-    print(fil["data"])
     return fil
     return {"data": [{"a": 1, "b": 2, "c": 2}, {"a": 1, "b": 2, "c": 2}]}
     return jsonify(fil)

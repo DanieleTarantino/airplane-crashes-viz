@@ -133,7 +133,7 @@
 
             var x0 = d3.scale.ordinal()
                 .domain(dataset[0].map(function (d) { return d.x; }))
-                .rangeRoundBands([0, width - xNudge], 0.02);
+                .rangeRoundBands([0, width - xNudge], 0);
 
 
             var x = d3.scale.linear()
@@ -149,7 +149,7 @@
                 .scale(y)
 
             var xAxis = d3.svg.axis()
-                .scale(x).tickFormat(d3.format("d"))
+                .scale(x0).tickFormat(d3.format("d"))
                 .orient("bottom")
 
             svg.append("g")

@@ -7,8 +7,6 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-
-    <!-- Don't change order of following imports -->
     <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
     <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
 
@@ -32,8 +30,6 @@
     <script>
 
         function wordCloud(selector) {
-
-            // CHANGE THIS TO CHANGE COLOR SCALE
             var fill = d3.scale.linear().domain([1, 25]).range(["#FCDAB7", "#1E5F74"]);
 
             var svg = d3.select(selector).append("svg")
@@ -44,13 +40,11 @@
                 .append("g")
                 .attr("transform", "translate(250,250)")
 
-            //Draw the word cloud
             function draw(words) {
 
                 var cloud = svg.selectAll("g text")
                     .data(words, function (d) { return d.text; })
 
-                //Entering words
                 cloud.enter()
                     .append("text")
                     .style("font-family", "monospace")
@@ -63,7 +57,6 @@
                             window.parent.window.postMessage({ message: d.text, sender: "wordcloud" }, '*')
                         })
 
-                //Entering and existing words
                 cloud.transition()
                     .duration(600)
                     .style("font-size", function (d) { return d.size + "px"; })
@@ -72,7 +65,6 @@
                     })
                     .style("fill-opacity", 1);
 
-                //Exiting words
                 cloud.exit()
                     .transition()
                     .duration(200)
@@ -115,10 +107,8 @@
             vis.update(getWords())
         }
 
-        //Create a new instance of the word cloud visualisation.
-        var myWordCloud = wordCloud('#cloud');
 
-        //Start cycling through the demo data
+        var myWordCloud = wordCloud('#cloud');
         myWordCloud.update(getWords());
     </script>
 </body>
