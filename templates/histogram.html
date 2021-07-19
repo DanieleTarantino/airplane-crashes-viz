@@ -133,7 +133,7 @@
 
             var x0 = d3.scale.ordinal()
                 .domain(dataset[0].map(function (d) { return d.x; }))
-                .rangeRoundBands([0, width - xNudge], 0);
+                .rangeRoundBands([0, width - xNudge], 0.2);
 
 
             var x = d3.scale.linear()
@@ -151,6 +151,15 @@
             var xAxis = d3.svg.axis()
                 .scale(x0).tickFormat(d3.format("d"))
                 .orient("bottom")
+                .tickValues(dataset[0].map(function (d, i) {
+                    if (i % Math.max(1, parseInt(dataset[0].length / 10)) === 0) {
+                        return d.x;
+                    }
+                })
+                    .filter(function (d) {
+                        return !!d;
+                    }
+                    ));
 
             svg.append("g")
                 .attr("class", "y axis")
@@ -160,7 +169,12 @@
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+                .call(xAxis)
+            // .selectAll("text")
+            // .style("text-anchor", "end")
+            // .attr("dx", "-.8em")
+            // .attr("dy", ".15em")
+            // .attr("transform", "rotate(-90)");
 
             var groups = svg.selectAll("g.cost")
                 .data(dataset)
@@ -172,7 +186,7 @@
                 .data(function (d) { return d; })
                 .enter()
                 .append("rect")
-                .attr("x", function (d) { return x(d.x); })
+                .attr("x", function (d) { return x0(d.x); })
                 .attr("y", function (d) { return y(d.y0 + d.y); })
                 .attr("height", function (d) { return y(d.y0) - y(d.y0 + d.y); })
                 .attr("width", x0.rangeBand())
